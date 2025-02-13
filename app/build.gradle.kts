@@ -53,6 +53,11 @@ dependencies {
     //Koin compose
     implementation(libs.koin.androidx.compose)
 
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.serialization)
+    implementation(libs.ktor.client.cio)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
