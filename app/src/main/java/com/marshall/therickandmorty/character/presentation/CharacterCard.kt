@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
@@ -21,28 +22,33 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.marshall.therickandmorty.R
-import com.marshall.therickandmorty.character.data.entities.Character
-import com.marshall.therickandmorty.character.data.entities.CharacterLocation
-import com.marshall.therickandmorty.character.data.entities.Origin
+import com.marshall.therickandmorty.character.domain.Character
+import com.marshall.therickandmorty.ui.theme.TheRickAndMortyTheme
 import com.marshall.therickandmorty.ui.theme.aliveStatusColor
 import com.marshall.therickandmorty.ui.theme.deadStatusColor
 
 
 @Composable
 fun CharacterCard(character: Character) {
-    Card (
+    Card(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
             .padding(5.dp)
     ) {
-        Row {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
             AsyncImage(
                 model = character.image,
                 contentDescription = character.name,
                 modifier = Modifier
-                    .size(150.dp)
+                    .size(170.dp)
 
+            )
+            Spacer(
+                modifier = Modifier.width(10.dp)
             )
             Column(
                 modifier = Modifier
@@ -53,13 +59,13 @@ fun CharacterCard(character: Character) {
                     style = MaterialTheme.typography.headlineSmall
                 )
                 Row {
-                    Surface (
+                    Surface(
                         modifier = Modifier
                             .size(20.dp)
                             .padding(5.dp)
                             .clip(CircleShape),
                         content = {},
-                        color = if (character.status == "Alive") aliveStatusColor else deadStatusColor
+                        color = if (character.isAlive()) aliveStatusColor else deadStatusColor
                     )
                     Text(
                         text = "${character.species} - ${character.status}",
@@ -77,7 +83,7 @@ fun CharacterCard(character: Character) {
                 )
 
                 Text(
-                    text = character.location.name,
+                    text = character.origin,
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(
@@ -87,7 +93,10 @@ fun CharacterCard(character: Character) {
                     text = stringResource(R.string.first_seen_in_label),
                     style = MaterialTheme.typography.titleSmall
                 )
-
+                Text(
+                    text = character.location,
+                    style = MaterialTheme.typography.bodyMedium
+                )
             }
         }
 
@@ -97,32 +106,22 @@ fun CharacterCard(character: Character) {
 @Composable
 @Preview(showBackground = true, name = "Character Card")
 fun CharacterCardPreview() {
-
-    val origin = Origin(
-        name = "Earth (C-137)",
-        url = "https://rickandmortyapi.com/api/location/1"
-    )
-
-    val characterLocation = CharacterLocation(
-        name = "Citadel of Ricks",
-        url = "https://rickandmortyapi.com/api/location/3"
-    )
-
-    // Create the Character instance using the previously created Origin and CharacterLocation
     val character = Character(
         created = "2017-11-04T18:48:46.250Z",
-        episode = emptyList(), // Use emptyList() for an empty list
         gender = "Male",
         id = 1,
         image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-        location = characterLocation,
+        location = "Citadel of Ricks",
         name = "Rick Sanchez",
-        origin = origin,
+        origin = "Earth (C-137)",
         species = "Human",
         status = "Alive",
         type = "", // Empty string for type
-        url = "https://rickandmortyapi.com/api/character/1")
+        url = "https://rickandmortyapi.com/api/character/1"
+    )
 
+    TheRickAndMortyTheme {
+        CharacterCard(character = character)
+    }
 
-    CharacterCard(character = character)
 }

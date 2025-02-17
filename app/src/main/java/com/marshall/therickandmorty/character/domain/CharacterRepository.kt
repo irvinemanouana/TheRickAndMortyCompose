@@ -1,10 +1,9 @@
 package com.marshall.therickandmorty.character.domain
 
-import com.marshall.therickandmorty.character.data.entities.CharacterInfo
-import com.marshall.therickandmorty.core.data.Result
+import androidx.paging.PagingData
+import com.marshall.therickandmorty.character.data.remote.CharacterInfoDto
 import kotlinx.coroutines.flow.Flow
 
 interface CharacterRepository {
-    suspend fun getAllCharacters(): Flow<Result<CharacterInfo>>
-    suspend fun getCharactersByPage(pageIndex: Int): Flow<Result<CharacterInfo>>
+    fun getAllCharacters(): Flow<PagingData<Character>>
 }

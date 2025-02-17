@@ -5,6 +5,7 @@ import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.cache.HttpCache
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
 
@@ -14,7 +15,11 @@ val networkModule = module {
         HttpClient(Android) {
             install(HttpCache)
             install(ContentNegotiation) {
-                json()
+                json(
+                    Json {
+                        ignoreUnknownKeys = true
+                    }
+                )
             }
         }
     }

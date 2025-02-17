@@ -1,17 +1,24 @@
-package com.marshall.therickandmorty.character.data.entities
+package com.marshall.therickandmorty.character.data.remote
 
+import com.marshall.therickandmorty.core.data.remote.InfoDto
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Character(
+data class CharacterInfoDto(
+    val info: InfoDto,
+    val results: List<CharacterDto>
+)
+
+@Serializable
+data class CharacterDto(
     val created: String,
     val episode: List<String>,
     val gender: String,
     val id: Int,
     val image: String,
-    val location: CharacterLocation,
+    val location: CharacterLocationDto,
     val name: String,
-    val origin: Origin,
+    val origin: OriginDto,
     val species: String,
     val status: String,
     val type: String,
@@ -19,13 +26,13 @@ data class Character(
 )
 
 @Serializable
-data class Origin(
+data class OriginDto(
     val name: String,
     val url: String
 )
 
 @Serializable
-data class CharacterLocation(
+data class CharacterLocationDto(
     val name: String,
     val url: String
 )
