@@ -64,6 +64,11 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
 
+    //Paging
+    implementation(libs.androidx.paging.runtime)
+    //Jetpack Compose integration
+    implementation(libs.androidx.paging.compose)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
