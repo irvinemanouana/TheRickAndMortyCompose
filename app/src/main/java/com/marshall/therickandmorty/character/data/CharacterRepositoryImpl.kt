@@ -17,7 +17,7 @@ class CharacterRepositoryImpl : CharacterRepository, KoinComponent {
 
     override suspend fun getAllCharacters(): Flow<Result<CharacterInfo>> = flow {
         try {
-            val response = client.get("https://rickandmortyapi.com/api/character").body<CharacterInfo>()
+            val response = client.get("$BASE_URL/character", ).body<CharacterInfo>()
             emit(Result.Success(response))
         } catch (e: Exception) {
             emit(Result.Error<Nothing>(e.message.toString()))
@@ -29,5 +29,9 @@ class CharacterRepositoryImpl : CharacterRepository, KoinComponent {
 
     override suspend fun getCharactersByPage(pageIndex: Int): Flow<Result<CharacterInfo>> {
         TODO("Not yet implemented")
+    }
+
+    companion object {
+        const val BASE_URL = "https://rickandmortyapi.com/api"
     }
 }

@@ -1,13 +1,13 @@
 package com.marshall.therickandmorty.character.presentation
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
+
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.marshall.therickandmorty.character.data.entities.CharacterInfo
 import com.marshall.therickandmorty.core.presentation.ErrorMessageScreen
 import com.marshall.therickandmorty.core.presentation.UiState
@@ -16,7 +16,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun CharacterListScreen(modifier: Modifier = Modifier, viewModel: CharacterViewModel = koinViewModel()) {
 
-    val charactersInfo by viewModel.characterUiState.collectAsState()
+    val charactersInfo by viewModel.characterUiState.collectAsStateWithLifecycle()
 
     when (charactersInfo) {
         is UiState.Success -> {
@@ -35,10 +35,13 @@ fun CharacterListScreen(modifier: Modifier = Modifier, viewModel: CharacterViewM
 
 @Composable
 fun CharacterListScreenContent(modifier: Modifier = Modifier, characterInfo: CharacterInfo? = null) {
-    Column(modifier = modifier
-        .fillMaxSize())
-    {
-        Text(text = characterInfo.toString())
+    LazyColumn(modifier = modifier) {
+        if (characterInfo != null) {
+            items(characterInfo.results) {
+                character ->
+                CharacterCard(character = character)
+            }
+        }
     }
 }
 
