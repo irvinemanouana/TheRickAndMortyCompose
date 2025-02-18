@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">The Rick and Morty</string>
+    <string name="last_known_location_label">Last known location:</string>
+    <string name="first_seen_in_label">First seen in:</string>
+</resources>
