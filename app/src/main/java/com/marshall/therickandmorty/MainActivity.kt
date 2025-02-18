@@ -4,14 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import com.marshall.therickandmorty.character.domain.Character
+import com.marshall.therickandmorty.character.presentation.CharacterDetailsScreen
 import com.marshall.therickandmorty.character.presentation.CharacterListScreen
 import com.marshall.therickandmorty.ui.theme.TheRickAndMortyTheme
 import org.koin.androidx.compose.KoinAndroidContext
@@ -24,17 +23,22 @@ class MainActivity : ComponentActivity() {
         setContent {
             TheRickAndMortyTheme {
                 KoinAndroidContext {
-                    Scaffold(
-                        modifier = Modifier.fillMaxSize(),
-                        topBar = {
-                            TopAppBar(
-                                title = {
-                                    Text(text = stringResource(R.string.app_name))
-                                }
-                            )
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = "characterList"
+                    ) {
+                        composable(route = "characterList") {
+                            CharacterListScreen(onNavigateToDetails = {
+                                selectedCharacter ->
+                                navController.navigate(route = selectedCharacter)
+                            })
                         }
-                    ) { innerPadding ->
-                        CharacterListScreen(modifier = Modifier.padding(innerPadding))
+                        composable<Character> {
+                            backStackEntry ->
+                            val character = backStackEntry.toRoute<Character>()
+                            CharacterDetailsScreen(character = character)
+                        }
                     }
                 }
             }

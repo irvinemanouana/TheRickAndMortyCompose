@@ -12,11 +12,13 @@ composeBom = "2024.04.01"
 koinVersion = "4.0.2-RC3"
 ktorVersion = "3.1.0"
 kSerializationVersion = "2.1.10"
+navigationCompose = "2.8.7"
 pagingRuntime = "3.3.6"
 pagingCompose = "1.0.0-alpha18"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

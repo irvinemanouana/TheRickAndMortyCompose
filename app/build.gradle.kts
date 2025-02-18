@@ -69,6 +69,10 @@ dependencies {
     //Jetpack Compose integration
     implementation(libs.androidx.paging.compose)
 
+    //Navigation
+    implementation(libs.androidx.navigation.compose)
+
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -1,6 +1,8 @@
 package com.marshall.therickandmorty.character.domain
 
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Character(
     val created: String,
     val gender: String,
